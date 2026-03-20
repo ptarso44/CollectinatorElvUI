@@ -1,0 +1,87 @@
+name: Lua Lint and TOC Validation
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install Lua
+      uses: leafo/gh-actions-lua@v8
+      with:
+        luaVersion: "5.1"
+    
+    - name: Install Luacheck
+      run: luarocks install luacheck
+    
+    - name: Run Luacheck
+      run: |
+        luacheck Collectinator/*.lua --globals GetSpellInfo GetItemInfo UnitClass IsModifierKeyDown IsShiftKeyDown IsAltKeyDown IsControlKeyDown CreateFrame hooksecurefunc PlaySound GameTooltip_SetDefaultAnchor GetNumCompanions GetCompanionInfo SelectCompanion SetCompanionExclusivity GetCompanionExclusivity GetCoinTextureString GetInventoryItemLink UnitGUID strsub tonumber pairs ipairs select type tostring format find match lower wipe insert remove sort concat pack unpack tContains date time difftime strlen strtrim strsplit strjoin strreverse strupper strlower strfind strmatch gsub random randomseed math.abs math.acos math.asin math.atan math.atan2 math.ceil math.cos math.deg math.exp math.floor math.frexp math.ldexp math.log math.log10 math.max math.min math.modf math.pi math.pow math.rad math.sin math.sqrt math.tan GetFactionInfoByName GetFactionInfo GetNumFactions GetReputationColor GetGuildInfoText GetGuildRosterInfo GetNumGuildMembers GetRealNumGuildMembers GetNumOnlineMembers GetNumGuildEvents GetGuildEventInfo GetGuildRosterSelection SetGuildRosterSelection GetGuildRosterSelectedView SortGuildRoster GuildRosterSetOfficerNote GuildRosterSetPublicNote SetGuildRosterShowOffline ToggleGuildRoster ShowGuildRoster CloseGuildRoster GuildControlGetRankName GuildControlGetRankFlags GuildControlSetRankFlag GuildControlAddRank GuildControlDelRank GuildControlSaveRank GuildDisband GuildLeave GuildUninvite IsInGuild HasFullControlOptions CanEditMOTD CanEditGuildTabard CanPromoteToLeader CanPromote OfficerCanInvite MemberCanInvite CanViewOfficerNote CanSpeakInOfficerChat GetNumSideDishes GetSideDishInfo SelectSideDish ClearSideDish GetNumTalentGroups GetActiveTalentGroup GetNumTalents GetTalentInfo GetTalentPrereqs GetUnspentTalents LearnTalent UnlearnTalent ResetTalents SetActiveTalentGroup GetTalentTabInfo GetTabardInfo BuyTabard CancelEmblemOfHeroismTrade GetNumEmblemsForTabard GetEmblemTextures BuyEmblemOfHeroism SetTabardColors SaveTabardColors GetNumMacros GetMacroInfo GetMacroIcons GetMacroBody SetMacro PickupMacro SaveMacro DeleteMacro GetBonusBarIndex GetShapeshiftFormCooldown CountStableSlots GetStabledPetInfo StablePet UnstablePet BuyNewStableSlot SellJunk RepairAllItems UseContainerItem SplitContainerItem PickupContainerItem PutItemInBag PutItemInSlot ReplaceEnchant ReplaceTradeEnchant ReplaceGlowSocket ReplaceMetaSocket AcceptProposal DeclineProposal CloseProposal GetNumLockTypes GetLockTypeInfo TryUnlockContainer GetNumQuestLogRewards GetQuestLogRewardInfo GetQuestLogChoiceRewardInfo GetQuestLogPushableQuests GetNumAvailableQuests GetAvailableQuestInfo QuestHasWarpers GetNumWarpers GetWarpersInfo WarpToWarpers CloseWarpers AbandonQuest CollapseQuestHeader ExpandQuestHeader GetQuestLogCollapseState SetAbandonQuest CompleteQuest CloseQuest GetGreetingText SelectGossipOption GetGossipActiveQuests GetGossipAvailableQuests GetGossipOptions GossipCancelGreeting ClickGossip GetNumActiveQuests GetActiveTitle GetNumAvailableTitles GetAvailableTitle IsActiveTitle SetActiveTitle ActivateTitle DeactivateTitle GetNumFollowedQuests GetFollowedQuestInfo SetFollowedQuest StopFollowingQuest GetNumTrackedAchievements GetTrackedAchievementInfo SetTrackedAchievement StopTrackingAchievement GetNumCompletedAchievements GetCompletedAchievementInfo GetAchievementCategoryInfo GetAchievementCategories GetCategoryInfo GetNumAchievementsInCategory GetAchievementInfoInCategory GetAchievementInfo GetAchievementLink GetLatestCompletedAchievements GetLatestCompletedLegionfallAchievements GetPreviousCompletedAchievements GetNextCompletedAchievements CompareAchievementCriteria GetAchievementCriteriaInfo GetAchievementNumCriteria GetAchievementCriteriaInfoByID GetAchievementCategoryLeadInfo GetNumDisplayedAchievements GetDisplayedAchievementInfo GetAchievementSearchResults GetNumAchievementSearchResults GetAchievementSearchResultInfo ClearAchievementSearchResults SearchAchievements SetAchievementSearchString GetAchievementSearchString GetCriteriaSpell SearchAchievementsByCriteria GetNumAchievementSearchResultsForCriteria GetAchievementSearchResultsForCriteria GetAchievementCriteriaSpell GetAchievementCriteriaQuest GetAchievementCriteriaItem GetAchievementCriteriaReputation GetAchievementCriteriaPlayerCondition GetAchievementCriteriaExploration GetAchievementCriteriaEvent GetAchievementCriteriaBGObject GetAchievementCriteriaMacro GetAchievementCriteriaEnvironment GetAchievementCriteriaPvPTeamRating GetAchievementCriteriaLFG GetAchievementCriteriaCalendar GetAchievementCriteriaCurrency GetAchievementCriteriaHeirloom GetAchievementCriteriaMount GetAchievementCriteriaPet GetAchievementCriteriaToy GetAchievementCriteriaAppearance GetAchievementCriteriaRecipe GetAchievementCriteriaTransmog GetAchievementCriteriaArtifactTrait GetAchievementCriteriaHonorTalent GetAchievementCriteriaPvPTalent GetAchievementCriteria AzeriteTrait GetAchievementCriteriaEssence GetAchievementCriteriaConduit GetAchievementCriteriaLegendaryPower GetAchievementCriteriaRuneforge GetAchievementCriteriaCovenant GetAchievementCriteriaSoulbind GetAchievementCriteriaAnima Conduit GetAchievementCriteriaRenown GetAchievementCriteriaCatalogue GetAchievementCriteriaItemUpgrade GetAchievementCriteriaMythicPlus GetAchievementCriteriaRatedPvP GetAchievementCriteriaWorldQuest GetAchievementCriteriaEmissary GetAchievementCriteriaOrderHallMission GetAchievementCriteriaGarrisonMission GetAchievementCriteriaScenario GetAchievementCriteriaChallengeMode GetAchievementCriteriaTimewalking GetAchievementCriteriaBrawl GetAchievementCriteriaArenaSkirmish GetAchievementCriteriaBattleground GetAchievementCriteriaRatedBattleground GetAchievementCriteriaPetBattle GetAchievementCriteriaPetBattlePvP GetAchievementCriteriaScenarios GetAchievementCriteriaProvingGrounds GetAchievementCriteriaNPE GetAchievementCriteriaRandomDungeon GetAchievementCriteriaSpecificDungeon GetAchievementCriteriaSpecificRaid GetAchievementCriteriaQuestObjective GetAchievementCriteriaKillCreature GetAchievementCriteriaTalkToNPC GetAchievementCriteriaCollectItem GetAchievementCriteriaLearnRecipe GetAchievementCriteriaEarnCurrency GetAchievementCriteriaSpendCurrency GetAchievementCriteriaReachFaction GetAchievementCriteriaExploreArea GetAchievementCriteriaWinBG GetAchievementCriteriaWinArena GetAchievementCriteriaCompleteQuest GetAchievementCriteriaCompleteScenario GetAchievementCriteriaCompleteDungeon GetAchievementCriteriaCompleteRaid GetAchievementCriteriaCompleteWorldQuest GetAchievementCriteriaCompleteEmissary GetAchievementCriteriaCompleteOrderHallMission GetAchievementCriteriaCompleteGarrisonMission GetAchievementCriteriaCompleteChallengeMode GetAchievementCriteriaCompleteTimewalking GetAchievementCriteriaCompleteBrawl GetAchievementCriteriaCompleteArenaSkirmish GetAchievementCriteriaCompletePetBattle GetAchievementCriteriaCompletePetBattlePvP GetAchievementCriteriaCompleteProvingGrounds GetAchievementCriteriaCompleteNPE GetAchievementCriteriaCompleteRandomDungeon GetAchievementCriteriaCompleteSpecificDungeon GetAchievementCriteriaCompleteSpecificRaid GetAchievementCriteriaUseItem GetAchievementCriteriaCastSpell GetAchievementCriteriaKillCreatureType GetAchievementCriteriaDamageTypeTaken GetAchievementCriteriaHealingTypeDone GetAchievementCriteriaAbsorbTypeDone GetAchievementCriteriaAvoidanceTypeUsed GetAchievementCriteriaCrowdControlTypeUsed GetAchievementCriteriaInterruptTypeUsed GetAchievementCriteriaDispelTypeDone GetAchievementCriteriaBuffTypeApplied GetAchievementCriteriaDebuffTypeApplied GetAchievementCriteriaAuraTypeStacked GetAchievementCriteriaResourceTypeGained GetAchievementCriteriaResourceTypeSpent GetAchievementCriteriaDistanceTraveled GetAchievementCriteriaTimeElapsed GetAchievementCriteriaItemCount GetAchievementCriteriaGoldSpent GetAchievementCriteriaGoldEarned GetAchievementCriteriaHonorGained GetAchievementCriteriaHonorSpent GetAchievementCriteriaConquestGained GetAchievementCriteriaConquestSpent GetAchievementCriteriaApGained GetAchievementCriteriaApSpent GetAchievementCriteriaArtifactPowerGained GetAchievementCriteriaArtifactPowerSpent GetAchievementCriteriaAzeriteGained GetAchievementCriteriaAzeriteSpent GetAchievementCriteriaAnimaGained GetAchievementCriteriaAnimaSpent GetAchievementCriteriaRenownGained GetAchievementCriteriaRenownSpent GetAchievementCriteriaCatalogueCount GetAchievementCriteriaItemUpgradeLevel GetAchievementCriteriaMythicPlusLevel GetAchievementCriteriaRatedPvPRating GetAchievementCriteriaWorldQuestCount GetAchievementCriteriaEmissaryCount GetAchievementCriteriaOrderHallMissionCount GetAchievementCriteriaGarrisonMissionCount GetAchievementCriteriaScenarioCount GetAchievementCriteriaChallengeModeTime GetAchievementCriteriaTimewalkingCount GetAchievementCriteriaBrawlCount GetAchievementCriteriaArenaSkirmishCount GetAchievementCriteriaBattlegroundCount GetAchievementCriteriaRatedBattlegroundCount GetAchievementCriteriaPetBattleCount GetAchievementCriteriaPetBattlePvPCount GetAchievementCriteriaScenariosCount GetAchievementCriteriaProvingGroundsCount GetAchievementCriteriaNPECount GetAchievementCriteriaRandomDungeonCount GetAchievementCriteriaSpecificDungeonCount GetAchievementCriteriaSpecificRaidCount CVarBitfield64And CVarBitfield64Or CVarBitfield64Xor CVarBitfield64Not CVarBitfield64LShift CVarBitfield64RShift CVarBitfield64Extract CVarBitfield64Insert CVarBitfield64IsSet CVarBitfield64Set CVarBitfield64Clear CVarBitfield64Toggle CVarBitfield64PopCount CVarBitfield64FindFirstSet CVarBitfield64FindLastSet CVarBitfield64CountLeadingZeros CVarBitfield64CountTrailingZeros CVarBitfield64RotateLeft CVarBitfield64RotateRight CVarBitfield64ByteSwap CVarBitfield64ReverseBits CVarBitfield64ReverseBytes CVarBitfield64SetBit CVarBitfield64ClearBit CVarBitfield64TestBit CVarBitfield64GetBit CVarBitfield64SetBits CVarBitfield64ClearBits CVarBitfield64TestBits CVarBitfield64GetBits CVarBitfield64SetMask CVarBitfield64ClearMask CVarBitfield64TestMask CVarBitfield64GetMask CVarBitfield64SetValue CVarBitfield64GetValue CVarBitfield64SetField CVarBitfield64GetField CVarBitfield64SetRange CVarBitfield64GetRange CVarBitfield64SetInterval CVarBitfield64GetInterval CVarBitfield64SetSegment CVarBitfield64GetSegment CVarBitfield64SetPortion CVarBitfield64GetPortion CVarBitfield64SetSection CVarBitfield64GetSection CVarBitfield64SetRegion CVarBitfield64GetRegion CVarBitfield64SetZone CVarBitfield64GetZone CVarBitfield64SetArea CVarBitfield64GetArea CVarBitfield64SetSpace CVarBitfield64GetSpace CVarBitfield64SetVolume CVarBitfield64GetVolume CVarBitfield64SetCapacity CVarBitfield64GetCapacity CVarBitfield64SetSize CVarBitfield64GetSize CVarBitfield64SetLength CVarBitfield64GetLength CVarBitfield64SetWidth CVarBitfield64GetWidth CVarBitfield64SetHeight CVarBitfield64GetHeight CVarBitfield64SetDepth CVarBitfield64GetDepth CVarBitfield64SetDimension CVarBitfield64GetDimension CVarBitfield64SetExtent CVarBitfield64GetExtent CVarBitfield64SetRange CVarBitfield64GetRange CVarBitfield64SetSpan CVarBitfield64GetSpan CVarBitfield64SetScope CVarBitfield64GetScope CVarBitfield64SetScale CVarBitfield64GetScale CVarBitfield64SetLevel CVarBitfield64GetLevel CVarBitfield64SetGrade CVarBitfield64GetGrade CVarBitfield64SetRank CVarBitfield64GetRank CVarBitfield64SetTier CVarBitfield64GetTier CVarBitfield64SetStep CVarBitfield64GetStep CVarBitfield64SetStage CVarBitfield64GetStage CVarBitfield64SetPhase CVarBitfield64GetPhase CVarBitfield64SetMode CVarBitfield64GetMode CVarBitfield64SetState CVarBitfield64GetState CVarBitfield64SetStatus CVarBitfield64GetStatus CVarBitfield64SetCondition CVarBitfield64GetCondition CVarBitfield64SetFlag CVarBitfield64GetFlag CVarBitfield64SetOption CVarBitfield64GetOption CVarBitfield64SetSetting CVarBitfield64GetSetting CVarBitfield64SetConfig CVarBitfield64GetConfig CVarBitfield64SetParam CVarBitfield64GetParam CVarBitfield64SetArg CVarBitfield64GetArg CVarBitfield64SetVal CVarBitfield64GetVal CVarBitfield64SetKey CVarBitfield64GetKey CVarBitfield64SetId CVarBitfield64GetId CVarBitfield64SetCode CVarBitfield64GetCode CVarBitfield64SetNum CVarBitfield64GetNum CVarBitfield64SetIdx CVarBitfield64GetIdx CVarBitfield64SetPos CVarBitfield64GetPos CVarBitfield64SetLoc CVarBitfield64GetLoc CVarBitfield64SetAddr CVarBitfield64GetAddr CVarBitfield64SetPtr CVarBitfield64GetPtr CVarBitfield64SetRef CVarBitfield64GetRef CVarBitfield64SetHdl CVarBitfield64GetHdl CVarBitfield64SetDesc CVarBitfield64GetDesc CVarBitfield64SetName CVarBitfield64GetName CVarBitfield64SetTitle CVarBitfield64GetTitle CVarBitfield64SetLabel CVarBitfield64GetLabel CVarBitfield64SetText CVarBitfield64GetText CVarBitfield64SetData CVarBitfield64GetData CVarBitfield64SetInfo CVarBitfield64GetInfo CVarBitfield64SetMeta CVarBitfield64GetMeta CVarBitfield64SetExtra CVarBitfield64GetExtra CVarBitfield64SetAux CVarBitfield64GetAux CVarBitfield64SetSupp CVarBitfield64GetSupp CVarBitfield64SetHelp CVarBitfield64GetHelp CVarBitfield64SetHint CVarBitfield64GetHint CVarBitfield64SetTip CVarBitfield64GetTip CVarBitfield64SetNote CVarBitfield64GetNote CVarBitfield64SetMemo CVarBitfield64GetMemo CVarBitfield64SetRemark CVarBitfield64GetRemark CVarBitfield64SetComment CVarBitfield64GetComment CVarBitfield64SetDescr CVarBitfield64GetDescr CVarBitfield64SetDefn CVarBitfield64GetDefn CVarBitfield64SetMeaning CVarBitfield64GetMeaning CVarBitfield64SetSense CVarBitfield64GetSense CVarBitfield64SetSignif CVarBitfield64GetSignif CVarBitfield64SetImport CVarBitfield64GetImport CVarBitfield64SetWeight CVarBitfield64GetWeight CVarBitfield64SetValue2 CVarBitfield64GetValue2 CVarBitfield64SetField2 CVarBitfield64GetField2 CVarBitfield64SetRange2 CVarBitfield64GetRange2 CVarBitfield64SetInterval2 CVarBitfield64GetInterval2 CVarBitfield64SetSegment2 CVarBitfield64GetSegment2 CVarBitfield64SetPortion2 CVarBitfield64GetPortion2 CVarBitfield64SetSection2 CVarBitfield64GetSection2 CVarBitfield64SetRegion2 CVarBitfield64GetRegion2 CVarBitfield64SetZone2 CVarBitfield64GetZone2 CVarBitfield64SetArea2 CVarBitfield64GetArea2 CVarBitfield64SetSpace2 CVarBitfield64GetSpace2 CVarBitfield64SetVolume2 CVarBitfield64GetVolume2 CVarBitfield64SetCapacity2 CVarBitfield64GetCapacity2 CVarBitfield64SetSize2 CVarBitfield64GetSize2 CVarBitfield64SetLength2 CVarBitfield64GetLength2 CVarBitfield64SetWidth2 CVarBitfield64GetWidth2 CVarBitfield64SetHeight2 CVarBitfield64GetHeight2 CVarBitfield64SetDepth2 CVarBitfield64GetDepth2 CVarBitfield64SetDimension2 CVarBitfield64GetDimension2 CVarBitfield64SetExtent2 CVarBitfield64GetExtent2
+      working-directory: ./collectinator_refactored
+      
+  toc-validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Validate TOC file
+      run: |
+        # Basic TOC validation
+        if [ ! -f "Collectinator/Collectinator.toc" ]; then
+          echo "Error: Collectinator.toc not found"
+          exit 1
+        fi
+        
+        # Check for required fields
+        grep -q "## Title:" Collectinator/Collectinator.toc || (echo "Missing Title field" && exit 1)
+        grep -q "## Interface:" Collectinator/Collectinator.toc || (echo "Missing Interface field" && exit 1)
+        
+        # Check interface version is correct for Wrath
+        if ! grep -q "## Interface: 30300" Collectinator/Collectinator.toc; then
+          echo "Warning: Interface version should be 30300 for Wrath of the Lich King"
+        fi
+        
+        echo "TOC validation passed!"
+      working-directory: ./collectinator_refactored
+
+  lua-syntax:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install Lua
+      uses: leafo/gh-actions-lua@v8
+      with:
+        luaVersion: "5.1"
+    
+    - name: Syntax check all Lua files
+      run: |
+        echo "Checking Lua syntax..."
+        errors=0
+        for file in Collectinator/*.lua Collectinator/Database/*.lua Collectinator/Locales/*.lua; do
+          if [ -f "$file" ]; then
+            if ! luac -p "$file" 2>/dev/null; then
+              echo "Syntax error in $file"
+              errors=$((errors + 1))
+            else
+              echo "✓ $file"
+            fi
+          fi
+        done
+        
+        if [ $errors -gt 0 ]; then
+          echo "Found $errors files with syntax errors"
+          exit 1
+        fi
+        
+        echo "All Lua files have valid syntax!"
+      working-directory: ./collectinator_refactored

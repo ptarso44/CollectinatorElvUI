@@ -1,0 +1,23 @@
+v1.0.4b 08/19/2021
+Season 7 release update
+- Updated for new Ascension mounts
+- Updated for new Ascension pets
+--------------------------------------------------------------------------------------------------------
+v1.0.4a 01/28/2021
+Felforged release update
+- Updated for new Ascension mounts
+- Updated for new Ascension pets
+--------------------------------------------------------------------------------------------------------
+v1.0.4a 12/20/2020
+Initial release based v1.0.4 (WotLK 3.3.5 base)
+- Corrected large tooltip bug caused by custom strings (actual bug in release version).
+- Correct issue where TBC filtering didn't work correctly.
+
+- Added all Ascension mounts
+- Added all Ascension pets
+- Added few missing Blizzlike pets
+- Removed class restrictions hiding mounts
+
+- Added all Sigil pets (these are kind of a mess)
+- Added a filter to hide Sigils except Sigil of Geras (available at vendor)
+--------------------------------------------------------------------------------------------------------
